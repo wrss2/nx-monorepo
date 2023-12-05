@@ -1,0 +1,96 @@
+{
+  "name": "bitcoinapp17",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "ngrx",
+  "sourceRoot": "apps/bitcoinapp17/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/bitcoinapp17",
+        "index": "apps/bitcoinapp17/src/index.html",
+        "browser": "apps/bitcoinapp17/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/bitcoinapp17/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+		"apps/bitcoinapp17/src/favicon.ico", 
+		"apps/bitcoinapp17/src/assets",
+		"apps/bitcoinapp17/src/db",
+			{
+				"glob": "**/*",
+				"input": "./../../node_modules/cryptocurrency-icons/svg/color/",
+				"output": "apps/bitcoinapp17/src/assets/cryptoicons/"
+			}		
+		],
+        "styles": ["apps/bitcoinapp17/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "bitcoinapp17:build:production"
+        },
+        "development": {
+          "buildTarget": "bitcoinapp17:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "bitcoinapp17:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/bitcoinapp17/**/*.ts", "apps/bitcoinapp17/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/bitcoinapp17/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "bitcoinapp17:build",
+        "staticFilePath": "dist/apps/bitcoinapp17/browser"
+      }
+    }
+  }
+}
